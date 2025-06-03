@@ -48,6 +48,20 @@ Or simply run the install script:
 bash install.sh
 ```
 
+4. Set up your environment variables:
+
+Copy the `.env_sample` file to create a new file named `.env`:
+
+```bash
+cp .env_sample .env
+```
+
+Edit the `.env` file and fill in your actual Azure AI Foundry values:
+- `AZURE_EXISTING_AGENT_ID`: Your Azure AI agent ID
+- `AI_PROJECT_CONNECTION_STRING`: Your connection string in the format `region.api.azureml.ms;subscription_id;resource_group;workspace_name`
+
+These environment variables are used by the script to connect to your specific Azure AI resources.
+
 ## Usage
 
 ### Basic Usage
@@ -104,15 +118,28 @@ python run_agent.py --thread_id thread_123456789
 python run_agent.py --prompt "What is the current weather in San Diego?"
 ```
 
+## Configuration
+
+The application uses environment variables stored in a `.env` file for configuration. The key variables include:
+
+- `AZURE_EXISTING_AGENT_ID`: The ID of your Azure AI Foundry agent
+- `AI_PROJECT_CONNECTION_STRING`: Connection string to your Azure AI project in the format:  
+  `region.api.azureml.ms;subscription_id;resource_group;workspace_name`
+- `AZURE_SUBSCRIPTION_ID`: Your Azure subscription ID
+- `AZURE_ENV_NAME`: The name of your Azure environment
+
+These settings are required for the script to connect to the correct Azure resources and interact with your specific AI agent.
+
 ## Troubleshooting
 
 If you encounter authentication issues:
 - Ensure you're logged into your Azure account
 - Verify that you have access to the Azure AI Foundry project
+- Check that the values in your `.env` file are correct
 
 If responses aren't appearing:
 - Try using the `--debug` flag to see the raw message structure
-- Check that the agent ID in the script is correct
+- Check that the agent ID in the `.env` file is correct
 
 ## License
 

@@ -4,6 +4,11 @@ import argparse
 import sys
 import time
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def print_help():
     """Print help information about available commands"""
@@ -22,15 +27,17 @@ def main():
     parser.add_argument('--debug', action='store_true', help='Enable debug output')
     args = parser.parse_args()
 
-    debug = args.debug
-
-    # Initialize the project client
+    debug = args.debug    # Initialize the project client
+    ai_conn_str = os.getenv('AI_PROJECT_CONNECTION_STRING', 
+                          "eastus.api.azureml.ms;6c6c7ade-1d43-4a86-8aca-fa189cf11c3c;aifoundrytests;agentstest")
+    agent_id = os.getenv('AZURE_EXISTING_AGENT_ID', "asst_3e9j31K0MXuHIMOLjVNyVU5q")
+    
     project_client = AIProjectClient.from_connection_string(
         credential=DefaultAzureCredential(),
-        conn_str="eastus.api.azureml.ms;6c6c7ade-1d43-4a86-8aca-fa189cf11c3c;aifoundrytests;agentstest")
+        conn_str=ai_conn_str)
 
     # Get the agent
-    agent = project_client.agents.get_agent("asst_3e9j31K0MXuHIMOLjVNyVU5q")
+    agent = project_client.agents.get_agent(agent_id)
     print(f"Connected to agent: {agent.name if hasattr(agent, 'name') else agent.id}\n")
 
     # Get or create a thread
