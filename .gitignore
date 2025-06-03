@@ -56,7 +56,9 @@ env/
 venv/
 ENV/
 .venv/
-.env*
+.env
+# Don't ignore the sample env file
+!.env_sample
 ## PyInstaller
 *.spec
 dist/
