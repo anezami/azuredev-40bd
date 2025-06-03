@@ -27,11 +27,13 @@ def main():
     parser.add_argument('--debug', action='store_true', help='Enable debug output')
     args = parser.parse_args()
 
-    debug = args.debug    # Initialize the project client
-    ai_conn_str = os.getenv('AI_PROJECT_CONNECTION_STRING', 
-                          "eastus.api.azureml.ms;6c6c7ade-1d43-4a86-8aca-fa189cf11c3c;aifoundrytests;agentstest")
-    agent_id = os.getenv('AZURE_EXISTING_AGENT_ID', "asst_3e9j31K0MXuHIMOLjVNyVU5q")
-    
+    debug = args.debug
+
+    # Get connection string and agent ID from environment variables
+    ai_conn_str = os.getenv('AI_PROJECT_CONNECTION_STRING')
+    agent_id = os.getenv('AZURE_EXISTING_AGENT_ID')
+
+    # Initialize the project client
     project_client = AIProjectClient.from_connection_string(
         credential=DefaultAzureCredential(),
         conn_str=ai_conn_str)
